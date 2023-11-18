@@ -34,6 +34,12 @@ query UserWithPosts {
 ```
 
 ```gql
+type Query {
+  user(id: Int): User
+}
+```
+
+```gql
 type User {
   id: Int
   name: String
