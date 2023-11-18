@@ -3,6 +3,71 @@
 <img src="./thumb.png" />
 
 
+# Differance between REST APIS
+
+In GraphQL, the HTTP response itself might not always return a traditional HTTP status code like `200 OK`. Instead, GraphQL typically returns a `200 OK` status code regardless of whether the query was successful or not.
+
+
+This is because GraphQL has its own error-handling mechanism within the response body. Even if there are errors within the GraphQL query, the server will still respond with a `200 OK` status code. However, within the response body, there's a field called "errors" that would contain any errors encountered during the execution of the query.
+
+
+The structure of a GraphQL response allows for both data and errors to be returned simultaneously. So, while the HTTP status code might consistently be `200 OK`, the actual success or failure of the query is indicated within the GraphQL response body itself.
+
+
+**This approach allows for a consistent response format, making it easier for clients to handle both successful data and potential errors uniformly.**
+
+```json
+{
+  "data": {
+    "user": {
+      "id": "123",
+      "name": "John Doe",
+      "email": "john@example.com"
+    }
+  },
+  "errors": [
+    {
+      "message": "Unauthorized access",
+      "locations": [
+        {
+          "line": 6,
+          "column": 9
+        }
+      ],
+      "path": [
+        "user"
+      ]
+    }
+  ]
+}
+```
+You can refer to the GraphQL specification here: [GraphQL Specification](https://spec.graphql.org/)
+
+
+While it's common to use POST requests for GraphQL due to their ability to handle complex queries, the GraphQL specification itself does not enforce a specific HTTP method.
+
+
+### REST
+
+- Endpoints: In RESTful APIs, endpoints represent resources, and each endpoint typically maps to a specific URI (Uniform Resource Identifier) representing a resource (e.g., /users, /posts).
+
+- Multiple Endpoints: REST often requires multiple endpoints for different use cases or to retrieve varying amounts of data. For instance, you might have /users to get a list of users and /users/{id} to get a specific user.
+
+- Fixed Structure: REST endpoints often return fixed data structures, and clients need to make multiple requests to different endpoints to fetch related data.
+
+- Over-fetching and Under-fetching: Clients might receive more data than needed (over-fetching) or might need to make multiple requests to gather all the required data (under-fetching).
+
+### GraphQL
+
+- Single Endpoint: GraphQL typically uses a single endpoint. Clients request the exact data they need by sending queries to this endpoint.
+
+- Flexible Queries: Clients can request specific fields and nested data structures in a single query, reducing over-fetching and under-fetching.
+
+- Schema and Type System: GraphQL uses a strong type system to define the structure of the data. Clients can introspect the schema to understand what data can be requested.
+
+
+
+
 # Basic building blocks
 
 GraphQL has three basic building blocks:
@@ -88,48 +153,6 @@ For example, consider a GraphQL query requesting information about a user's name
 Resolvers play a key role in allowing GraphQL to abstract away the data source and provide a consistent interface for data retrieval, irrespective of where or how the data is stored.
 
 
-# Differance between REST APIS
-
-In GraphQL, the HTTP response itself might not always return a traditional HTTP status code like `200 OK`. Instead, GraphQL typically returns a `200 OK` status code regardless of whether the query was successful or not.
-
-
-This is because GraphQL has its own error-handling mechanism within the response body. Even if there are errors within the GraphQL query, the server will still respond with a `200 OK` status code. However, within the response body, there's a field called "errors" that would contain any errors encountered during the execution of the query.
-
-
-The structure of a GraphQL response allows for both data and errors to be returned simultaneously. So, while the HTTP status code might consistently be `200 OK`, the actual success or failure of the query is indicated within the GraphQL response body itself.
-
-
-**This approach allows for a consistent response format, making it easier for clients to handle both successful data and potential errors uniformly.**
-
-```json
-{
-  "data": {
-    "user": {
-      "id": "123",
-      "name": "John Doe",
-      "email": "john@example.com"
-    }
-  },
-  "errors": [
-    {
-      "message": "Unauthorized access",
-      "locations": [
-        {
-          "line": 6,
-          "column": 9
-        }
-      ],
-      "path": [
-        "user"
-      ]
-    }
-  ]
-}
-```
-You can refer to the GraphQL specification here: [GraphQL Specification](https://spec.graphql.org/)
-
-
-While it's common to use POST requests for GraphQL due to their ability to handle complex queries, the GraphQL specification itself does not enforce a specific HTTP method.
 
 
 
