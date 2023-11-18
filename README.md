@@ -18,21 +18,6 @@ These building blocks enable flexibility and efficiency in data retrieval, modif
 
 ## Example of a GraphQL query:
 
-The below query will ask the server for the user of ID 1 and the posts for that user
-
-```gql
-query UserWithPosts {
-  user(id: 1) {
-    id
-    name
-    posts {
-      id
-      body
-    }
-  }
-}
-```
-
 ```gql
 type Query {
   user(id: Int): User
@@ -50,6 +35,24 @@ type Post {
   body: String
 }
 ```
+
+
+The below query will ask the server for the user of ID 1 and the posts for that user
+
+```gql
+query UserWithPosts {
+  user(id: 1) {
+    id
+    name
+    posts {
+      id
+      body
+    }
+  }
+}
+```
+
+
 
 **Notes**:
 
