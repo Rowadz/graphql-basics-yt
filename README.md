@@ -33,6 +33,18 @@ query UserWithPosts {
 }
 ```
 
+```gql
+type User {
+  id: Int
+  name: String
+  posts: [Post]
+}
+type Post {
+  id: Int
+  body: String
+}
+```
+
 **Notes**:
 
 - `id` - `name` - `posts` - `id` - `body` are called fields.
