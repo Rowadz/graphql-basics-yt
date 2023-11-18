@@ -5,6 +5,26 @@
 
 # Differance between REST APIS
 
+
+### REST
+
+- Endpoints: In RESTful APIs, endpoints represent resources, and each endpoint typically maps to a specific URI (Uniform Resource Identifier) representing a resource (e.g., /users, /posts).
+
+- Multiple Endpoints: REST often requires multiple endpoints for different use cases or to retrieve varying amounts of data. For instance, you might have /users to get a list of users and /users/{id} to get a specific user.
+
+- Fixed Structure: REST endpoints often return fixed data structures, and clients need to make multiple requests to different endpoints to fetch related data.
+
+- Over-fetching and Under-fetching: Clients might receive more data than needed (over-fetching) or might need to make multiple requests to gather all the required data (under-fetching).
+
+### GraphQL
+
+- Single Endpoint: GraphQL typically uses a single endpoint. Clients request the exact data they need by sending queries to this endpoint.
+
+- Flexible Queries: Clients can request specific fields and nested data structures in a single query, reducing over-fetching and under-fetching.
+
+- Schema and Type System: GraphQL uses a strong type system to define the structure of the data. Clients can introspect the schema to understand what data can be requested.
+
+
 In GraphQL, the HTTP response itself might not always return a traditional HTTP status code like `200 OK`. Instead, GraphQL typically returns a `200 OK` status code regardless of whether the query was successful or not.
 
 
@@ -47,23 +67,6 @@ You can refer to the GraphQL specification here: [GraphQL Specification](https:/
 While it's common to use POST requests for GraphQL due to their ability to handle complex queries, the GraphQL specification itself does not enforce a specific HTTP method.
 
 
-### REST
-
-- Endpoints: In RESTful APIs, endpoints represent resources, and each endpoint typically maps to a specific URI (Uniform Resource Identifier) representing a resource (e.g., /users, /posts).
-
-- Multiple Endpoints: REST often requires multiple endpoints for different use cases or to retrieve varying amounts of data. For instance, you might have /users to get a list of users and /users/{id} to get a specific user.
-
-- Fixed Structure: REST endpoints often return fixed data structures, and clients need to make multiple requests to different endpoints to fetch related data.
-
-- Over-fetching and Under-fetching: Clients might receive more data than needed (over-fetching) or might need to make multiple requests to gather all the required data (under-fetching).
-
-### GraphQL
-
-- Single Endpoint: GraphQL typically uses a single endpoint. Clients request the exact data they need by sending queries to this endpoint.
-
-- Flexible Queries: Clients can request specific fields and nested data structures in a single query, reducing over-fetching and under-fetching.
-
-- Schema and Type System: GraphQL uses a strong type system to define the structure of the data. Clients can introspect the schema to understand what data can be requested.
 
 
 
