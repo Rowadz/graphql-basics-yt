@@ -1,1 +1,1 @@
-# learn-graphql-by-projects
+# graphql-basics
