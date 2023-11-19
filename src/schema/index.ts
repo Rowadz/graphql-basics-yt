@@ -1,6 +1,7 @@
 // import gql from 'graphql-tag'
 import axios from 'axios'
 import { createSchema } from 'graphql-yoga'
+import { Post, User } from './types'
 
 let counter = 0
 
@@ -46,14 +47,14 @@ export const schema = createSchema({
 
     type Query {
       hello: [String!]
-      s: Int
+      number: Int
       user(id: Int!): User
     }
   `,
   resolvers: {
     User: {
-      nextUser: async (parnet: unknown, {}: { id: number }) => {
-        const { id } = parnet as { id: number }
+      nextUser: async (user: User, {}: { id: number }) => {
+        const { id } = user
         const { data } = await axios.get(
           `https://jsonplaceholder.typicode.com/users/${id + 1}`
         )
@@ -61,9 +62,8 @@ export const schema = createSchema({
         console.log({ counter })
         return data
       },
-      posts: async (parnet: unknown, {}: { id: number }) => {
-        const { id } = parnet as { id: number }
-        console.log(`https://jsonplaceholder.typicode.com/posts?userId=${id}`)
+      posts: async (post: Post, {}: { id: number }) => {
+        const { id } = post
         const { data } = await axios.get(
           `https://jsonplaceholder.typicode.com/posts?userId=${id}`
         )
@@ -73,8 +73,8 @@ export const schema = createSchema({
       },
     },
     Post: {
-      user: async (parnet: unknown) => {
-        const { userId } = parnet as { userId: number }
+      user: async (post: Post) => {
+        const { userId } = post
         const { data } = await axios.get(
           `https://jsonplaceholder.typicode.com/users/${userId}`
         )
@@ -84,8 +84,7 @@ export const schema = createSchema({
       },
     },
     Query: {
-      user: async (parnet: unknown, { id }: { id: number }) => {
-        console.log({ parnet })
+      user: async (_, { id }: { id: number }) => {
         const { data } = await axios.get(
           `https://jsonplaceholder.typicode.com/users/${id}`
         )
@@ -94,7 +93,7 @@ export const schema = createSchema({
         return data
       },
       hello: () => ['World'],
-      s: () => 1,
+      number: () => 1,
     },
   },
 })
