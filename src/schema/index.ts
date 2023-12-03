@@ -1,11 +1,12 @@
 // import gql from 'graphql-tag'
 import axios from 'axios'
 import { createSchema } from 'graphql-yoga'
-import { Post, User } from './types'
+import type { Post, User } from './types'
+import type { GraphQLContext } from '../types'
 
 let counter = 0
 
-export const schema = createSchema({
+export const schema = createSchema<GraphQLContext>({
   // or use gql``
   typeDefs: /* GraphQL */ `
     type Company {
@@ -53,44 +54,31 @@ export const schema = createSchema({
   `,
   resolvers: {
     User: {
-      nextUser: async (user: User, {}: { id: number }) => {
-        const { id } = user
-        const { data } = await axios.get(
-          `https://jsonplaceholder.typicode.com/users/${id + 1}`
-        )
-        counter++
-        console.log({ counter })
-        return data
+      nextUser: async (
+        user: User,
+        {}: { id: number },
+        { loaders: { userLoader } }
+      ) => {
+        return userLoader.load(user.id + 1)
       },
-      posts: async (post: Post, {}: { id: number }) => {
-        const { id } = post
-        const { data } = await axios.get(
-          `https://jsonplaceholder.typicode.com/posts?userId=${id}`
-        )
-        counter++
-        console.log({ counter })
-        return data
+      posts: async (
+        user: User,
+        {}: { id: number },
+        { loaders: { postLoader } }
+      ) => {
+        const { id } = user
+        return postLoader.load(id)
       },
     },
     Post: {
-      user: async (post: Post) => {
+      user: async (post: Post, _, { loaders: { userLoader } }) => {
         const { userId } = post
-        const { data } = await axios.get(
-          `https://jsonplaceholder.typicode.com/users/${userId}`
-        )
-        counter++
-        console.log({ counter })
-        return data
+        return userLoader.load(userId)
       },
     },
     Query: {
-      user: async (_, { id }: { id: number }) => {
-        const { data } = await axios.get(
-          `https://jsonplaceholder.typicode.com/users/${id}`
-        )
-        counter++
-        console.log({ counter })
-        return data
+      user: async (_, { id }: { id: number }, { loaders: { userLoader } }) => {
+        return userLoader.load(id)
       },
       hello: () => ['World'],
       number: () => 1,
