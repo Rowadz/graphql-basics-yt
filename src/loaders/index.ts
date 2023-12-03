@@ -11,9 +11,16 @@ export const userLoader = new DataLoader<number, User>(
     const { data } = await axios.get<User[]>(
       `https://jsonplaceholder.typicode.com/users?${idQueryParams}`
     )
+
+    const usersMap = data.reduce<Record<number, User>>((acc, user: User) => {
+      return {
+        ...acc,
+        [user.id]: user,
+      }
+    }, {})
     counter++
     console.log({ counter })
-    return data
+    return ids.map((id) => usersMap[id])
   }
 )
 
