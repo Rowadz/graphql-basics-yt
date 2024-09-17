@@ -1,4 +1,4 @@
-# graphql-basics
+# GraphQL
 
 [Videos](https://youtube.com/playlist?list=PLM0LBHjz37LUZ8Nep1rEsXCYFjyY3S-vD&si=a0ymuuRMpf2b-Aeh)
 
